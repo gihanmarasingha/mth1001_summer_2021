@@ -1,0 +1,8 @@
+[package]
+name = "mth1001_summer_2021"
+version = "0.1"
+lean_version = "leanprover-community/lean:3.30.0"
+path = "src"
+
+[dependencies]
+mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "6eb3d971c831b0a9a7fa8062221ba5bc10163665"}

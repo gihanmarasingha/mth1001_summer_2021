@@ -18,7 +18,7 @@ variables [field F] [add_comm_group V] [vector_space F V] (u v w : V) (a b c : F
 
 open vector_space
 
-lemma zero_smul' (u : V) : (0 : V) = (0 : R) • u :=
+lemma zero_smul' (u : V) : (0 : V) = (0 : F) • u :=
 begin
   sorry
 end
@@ -28,7 +28,7 @@ begin
   sorry
 end
 
-lemma inv_eq_neg (u : V) (x : R) : -u = (-1 : R) • u :=
+lemma inv_eq_neg (u : V) (x : F) : -u = (-1 : F) • u :=
 begin
   sorry
 end

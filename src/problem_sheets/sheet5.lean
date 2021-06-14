@@ -27,7 +27,7 @@ end question1
 
 section question2
 
-/- Question 2. What about the other way? -/
+/- What about the other way? -/
 lemma smul_zero'' (u : V) : a • (0 : V) = (0 : V) :=
 begin
   sorry
@@ -37,7 +37,7 @@ end question2
 
 section question3
 
-/- Question 3. This one is slightly harder, try to prove that -u is just -1 • u -/
+/- This one is slightly harder, try to prove that -u is just -1 • u -/
 lemma inv_eq_neg (u : V) (x : F) : -u = (-1 : F) • u :=
 begin
   sorry

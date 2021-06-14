@@ -24,22 +24,3 @@ class vector_space (F : Type u) (V : Type v) [field F] [add_comm_group V] extend
 variables [field F] [add_comm_group V] [vector_space F V] (u v w : V) (a b c : F)
 
 open vector_space
-
-
-/- Now prove the fact that 0 • u = 0, where 0 is the zero vector  -/
-lemma zero_smul' (u : V) : (0 : V) = (0 : F) • u :=
-begin
-  sorry
-end
-
-/- What about the other way? -/
-lemma smul_zero'' (u : V) : a • (0 : V) = (0 : V) :=
-begin
-  sorry
-end
-
-/- This one is slightly harder, try to prove that -u is just -1 • u -/
-lemma inv_eq_neg (u : V) (x : F) : -u = (-1 : F) • u :=
-begin
-  sorry
-end

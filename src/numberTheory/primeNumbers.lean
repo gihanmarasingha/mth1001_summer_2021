@@ -2,20 +2,23 @@ import data.int.basic data.nat.basic data.nat.prime tactic
 
 open int nat
 
+
 /- 
 ## Definition 1.1
 A prime number is a natural number p > 1, which is divisible only
 by the natural numbers 1 and p.
 -/
 
+
 /-
 ## Definition 1.2
 Let m, n ∈ ℤ.
 Then n is divisible by m (m ∣ n) if there exists a ∈ ℤ such that n = ma.
 -/
+example : 7 ∣ 91 := by {use 13, tauto}
 
-example : 7 ∣ 91 := begin use 13, tauto end
-example : (-5 : ℤ) ∣ 45 := begin use -9, tauto end
+example : (-5 : ℤ) ∣ 45 := by {use -9, tauto}
+
 example : ¬ (11 ∣ 87) := begin
   have h₁ : 11 ≠ 3 := by norm_num, --
   have h₂ : 11 ≠ 29 := by norm_num,
@@ -30,11 +33,13 @@ example : ¬ (11 ∣ 87) := begin
   repeat {contradiction},
   norm_num,
 end
+
 example : ∀ x : ℤ, 1 ∣ x := begin -- Every number is dvisible by 1.
   intro x,
   use x, 
   simp, 
 end
+
 example (x : ℤ) : 2 ∣ x ↔ even x := begin -- A number is divisible by 2 iff it is even.
   split,
    repeat {intro h, 
@@ -43,28 +48,31 @@ example (x : ℤ) : 2 ∣ x ↔ even x := begin -- A number is divisible by 2 if
            exact hk},
 end
 
+
 /-
 ## Theorem 1.4
 Let n : ℕ with n > 1.
 Then n has a prime factor p.
 -/
-
 theorem prime_fact (n : ℕ) (H: 1 < n) : ∃ p, prime p → p ∣ n := begin
-  induction n with k hk,
-    use 2,
-    intro h,
-    use 0, simp,
-    
-    
-    sorry
-    -- # Add strong induction proof from notes
+  
+  by_cases hn : prime n,
+    {-- for n is prime
+      use n,
+      simp,
+    },
+    {-- for n is not prime
+      sorry,
+    }
+
+  -- # Add strong induction proof from notes
 end
+
 
 /-
 ## Theorem 1.5 - Euclid
 There are infinitely many primes.
 -/
-
 theorem Euclid : ∀ N, ∃ p ≥ N, prime p := begin
   intro N,
 
@@ -93,16 +101,17 @@ theorem Euclid : ∀ N, ∃ p ≥ N, prime p := begin
    {exact hp},
 end
 
+
 /-
 ## Theorem 1.7
 If n : ℕ, with n > 1, then either n is prime, or is a product of a
 (finite) sequence of primes.
 -/
-
 theorem prime_or_product (n : ℕ) (H : n > 1) : prime n ∨ sorry /- finite sequence of primes -/ :=
 begin
   sorry, -- # Add strong induction proof from notes
 end
+
 
 /-
 ## Theorem 1.8

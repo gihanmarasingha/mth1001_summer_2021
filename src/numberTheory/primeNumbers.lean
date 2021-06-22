@@ -54,18 +54,18 @@ end
 Let n : ℕ with n > 1.
 Then n has a prime factor p.
 -/
-theorem prime_fact (n : ℕ) (H: 1 < n) : ∃ p, prime p → p ∣ n := begin
-  
-  by_cases hn : prime n,
-    {-- for n is prime
-      use n,
-      simp,
-    },
-    {-- for n is not prime
-      sorry,
-    }
+theorem prime_fact : ∀ n : ℕ, 2 ≤ n → ∃ p, prime p → p ∣ n := begin
+  intro n,
+  apply nat.strong_induction_on n,
 
-  -- # Add strong induction proof from notes
+  intros a h₁ ha,
+  by_cases prime a,
+    {use a, tauto},
+
+    {unfold prime at h, push_neg at h,
+    specialize h ha,
+    rcases h with ⟨m, hm, h₁, h₂⟩,
+    use m, tauto}
 end
 
 
@@ -101,17 +101,43 @@ theorem Euclid : ∀ N, ∃ p ≥ N, prime p := begin
    {exact hp},
 end
 
-
 /-
 ## Theorem 1.7
 If n : ℕ, with n > 1, then either n is prime, or is a product of a
 (finite) sequence of primes.
 -/
-theorem prime_or_product (n : ℕ) (H : n > 1) : prime n ∨ sorry /- finite sequence of primes -/ :=
+theorem prime_or_product_1 (n : ℕ) (H : 2 ≤ n) : prime n ∨ ∃ m a: ℕ, 2 ≤ m ∧ m < n → m * a = n :=
+-- Either prime n or n is product of 2 different naturals
 begin
-  sorry, -- # Add strong induction proof from notes
+  by_cases prime n,
+    {left, exact h},
+    {right, unfold prime at h, push_neg at h,
+      specialize h H,
+      cases h with m hm,
+
+      use m,
+      use n/m,
+      intro h₁,
+      cases hm with h₂ h₃,
+      exact nat.mul_div_cancel' h₂,
+    }
 end
 
+def list_prod : list ℕ → ℕ
+  | [] := 1
+  | (h :: t) := h * list_prod t
+
+def list_prime : list ℕ → Prop
+  | [] := true
+  | (h :: t) := prime h ∧ list_prime t
+
+def list_prod_prime_eq (n : ℕ) (P : list ℕ): Prop :=
+  list_prime P ∧ n = list_prod P
+
+theorem prime_or_product_2 (n : ℕ) (H : 2 ≤ n): ∃ P : list ℕ, list_prod_prime_eq n P := begin
+  -- n is a product of a list of primes
+  sorry,
+end
 
 /-
 ## Theorem 1.8

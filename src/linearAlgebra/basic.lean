@@ -28,13 +28,12 @@ variables [field F] [add_comm_group V] [vector_space F V] (u v w : V) (a b c : F
 
 open vector_space
 
+-- Definition of a subspace
 structure subSpace : Type v :=
   (carrier : set V)
   (zero_mem' : (0 : V) ∈ carrier)
   (add_mem' : ∀ {a b : V}, a ∈ carrier → b ∈ carrier → a + b ∈ carrier)
   (smul_mem' : ∀ (c_1 : F) {x : V}, x ∈ carrier → c_1 • x ∈ carrier)
-
-
 
 variables {p q : subSpace F V}
 variables (p q)
@@ -73,7 +72,7 @@ def Has_Inf' (U W : subSpace F V) : subSpace F V := {
 
 instance : has_inf (subSpace F V) :=
 ⟨λ p q, {
-  carrier   := p ∩ q,
+  carrier   := p.carrier ∩ q.carrier,
   zero_mem' := by simp,
   add_mem'  := by simp [add_mem] {contextual := tt},
   smul_mem' := by simp [smul_mem] {contextual := tt} }⟩

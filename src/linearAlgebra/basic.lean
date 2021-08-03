@@ -73,8 +73,7 @@ def Has_Inf' (U W : subSpace F V) : subSpace F V := {
 
 instance : has_inf (subSpace F V) :=
 ⟨λ p q, {
-  carrier   := p ∩ q,
+  carrier := p.carrier ∩ q.carrier,
   zero_mem' := by simp,
   add_mem'  := by simp [add_mem] {contextual := tt},
   smul_mem' := by simp [smul_mem] {contextual := tt} }⟩
-

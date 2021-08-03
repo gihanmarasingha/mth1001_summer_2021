@@ -1,11 +1,11 @@
-import data.real.basic linearAlgebra.basic
+import data.real.basic algebra.module.submodule algebra.module.submodule_lattice
 
 -- initiating the file
 universes u v
 variables {F : Type u} {V : Type v}
-variables [field F] [add_comm_group V] [vector_space F V] (u v w : V) (a b c : F)
+variables [field F] [add_comm_group V] [module F V] (u v w : V) (a b c : F)
 
-open real vector_space
+open real module
 
 -- Let's define some basic results we are going to need, these are from our
 -- definition of a vector space,
@@ -15,17 +15,6 @@ lemma right_dist (a b : F) (u : V) : (a + b) • u = a • u + b • u := right_
 lemma smul_smul' (a b : F) (u : V) : a • (b • u) = (a * b) • u := smul_smul a b u
 lemma smul_id (u : V) : (1 : F) • u = u := smul_id u -/
 
-
-
-def R_n_module (n : ℕ) : module ℝ (fin n → ℝ) := 
-  { smul := λ x hx a, x * (hx a),
-  one_smul := λ b, by simp,
-  mul_smul := λ x y b, by {simp, ext, linarith,},
-  smul_add := λ r x y, by {ext, dsimp, linarith,},
-  smul_zero := λ r, by {ext, dsimp, linarith,},
-  add_smul := λ r s x, by {ext, dsimp, linarith,},
-  zero_smul := λ r, by {ext, dsimp, linarith,},
-}
 
 section question1
 
@@ -48,7 +37,7 @@ section question1
   begin
     have h : a • (0 : V) = a • 0 + a • 0, from
     calc a • (0 : V) = a • (0 + 0) : by rw add_zero 
-    ... = a • 0 + a • 0 : by rw vector_space.smul_add,
+    ... = a • 0 + a • 0 : by rw smul_add,
     rw ← add_right_cancel_iff at h, swap,
     exact - (a • 0),
     rw add_neg_self at h,
@@ -74,15 +63,28 @@ section question1
   end
 end question1
 
+def R_n_module (n : ℕ) : module ℝ (fin n → ℝ) := 
+  { smul := λ x hx a, x * (hx a),
+  one_smul := λ b, by simp,
+  mul_smul := λ x y b, by {simp, ext, linarith,},
+  smul_add := λ r x y, by {ext, dsimp, linarith,},
+  smul_zero := λ r, by {ext, dsimp, linarith,},
+  add_smul := λ r s x, by {ext, dsimp, linarith,},
+  zero_smul := λ r, by {ext, dsimp, linarith,},
+}
+
 section question2
 
+  def W₃ : submodule ℝ (R_n_module 3) := { 
+    carrier := U.carrier ∩ W.carrier,
+    zero_mem' := by simp,
+    add_mem' := by simp [add_mem] {contextual := tt},
+    smul_mem' := by simp [smul_mem] {contextual := tt},}
   
-
 end question2
 
+
 section question3
-
-
 
 end question3
 

@@ -16,7 +16,45 @@ variables {G H : Type} [group G] [group H]
 Prove that a product `G × H` of groups is commutatitive if and only if each of `G` and `H` are.
 -/
 lemma commutative_prod_iff : is_comm (G × H) ↔ (is_comm G) ∧ (is_comm H) :=
-sorry
+begin
+  split,
+  {
+    rw [is_comm, is_comm, is_comm],
+    rw prod.forall,
+    intros p,
+    split,
+    {
+      intros a₁ a₂,
+      have p₁ := p a₁ 1 (a₂, 1),
+      rw [prod.mk_mul_mk, prod.mk_mul_mk] at p₁,
+      rw mul_one at p₁,
+      rw prod.mk.inj_iff at p₁,
+      rw eq_self_iff_true at p₁,
+      rw and_true at p₁,
+      exact p₁,
+    },
+    {
+      intros b₁ b₂,
+      have p₁ := p 1 b₁ (1, b₂),
+      rw [prod.mk_mul_mk, prod.mk_mul_mk] at p₁,
+      rw mul_one at p₁,
+      rw prod.mk.inj_iff at p₁,
+      rw eq_self_iff_true at p₁,
+      rw true_and at p₁,
+      exact p₁,
+    },
+  },
+  {
+    rintro ⟨p₁, p₂⟩,
+    intros k₁ k₂,
+    rw is_comm at p₁ p₂,
+    specialize p₁ k₁.fst k₂.fst,
+    specialize p₂ k₁.snd k₂.snd,
+    ext,
+    {exact p₁},
+    {exact p₂},
+  }
+end
 
 /-!
 ## Group orders
